@@ -1,0 +1,150 @@
+﻿<ng-template #info>
+    <div class="container">
+        <form (ngSubmit)="submit()" #form="ngForm">
+            <button class="btn btn-outline-info mb-3" type="button" *ngIf="customer.id" (click)="viewHistory()">View History</button>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
+                    <h5 class="mb-3">Customer Info</h5>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name" name="name" [(ngModel)]="customer.name" required #name="ngModel" />
+                        <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+                            <div *ngIf="name.errors.required">Name is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Surname" name="surname" [(ngModel)]="customer.surname" required #surname="ngModel" />
+                        <div class="alert alert-danger" *ngIf="surname.touched && surname.invalid">
+                            <div *ngIf="surname.errors.required">Surname is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="middlename" placeholder="Middlename (optional)" [(ngModel)]="customer.middleName" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="notes" placeholder="Notes (optional)" [(ngModel)]="customer.notes" />
+                    </div>
+
+                </div><!--/.col-6-->
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
+                    <h5 class="mb-3">Email</h5>
+
+                    <ng-container *ngFor="let email of customer.emails; index as i">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" name="type{{i}}" placeholder="Type" [(ngModel)]="email.type" class="form-control" required #type="ngModel" />
+                                <div class="input-group-append" *ngIf="i > 0">
+                                    <button class="btn btn-outline-info" type="button" (click)="deleteEmail(email)">delete</button>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-danger" *ngIf="type.touched && type.invalid">
+                                <div *ngIf="type.errors.required">Type is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" name="email{{i}}" placeholder="Email" [(ngModel)]="email.value" class="form-control" required email #em="ngModel" />
+                            <div class="alert alert-danger" *ngIf="em.touched && em.invalid">
+                                <div *ngIf="em.errors.required">Email is required.</div>
+                                <div *ngIf="em.errors.email">Invalid email.</div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <button class="btn btn-outline-info" type="button" (click)="addEmail()">Add Email</button>
+
+                </div><!--/.col-6-->
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
+
+                    <h5 class="mb-3">Address</h5>
+
+                    <ng-container *ngFor="let address of customer.addresses; index as i">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type" name="type_addr{{i}}" [(ngModel)]="address.type" required #type="ngModel" />
+                                <div class="input-group-append" *ngIf="i > 0">
+                                    <button class="btn btn-outline-info" type="button" (click)="deleteAddress(address)">delete</button>
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" *ngIf="type.touched && type.invalid">
+                                <div *ngIf="type.errors.required">Type is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="City" name="city{{i}}" [(ngModel)]="address.city" required #city="ngModel" />
+                            <div class="alert alert-danger" *ngIf="city.touched && city.invalid">
+                                <div *ngIf="city.errors.required">City is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Postal code" name="postalCode{{i}}" [(ngModel)]="address.postalCode" required #postalCode="ngModel" />
+                            <div class="alert alert-danger" *ngIf="postalCode.touched && postalCode.invalid">
+                                <div *ngIf="postalCode.errors.required">Postal code is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Street line 1" name="street1_{{i}}" [(ngModel)]="address.street.street1" required #street="ngModel" />
+                            <div class="alert alert-danger" *ngIf="street.touched && street.invalid">
+                                <div *ngIf="street.errors.required">Street is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="street2_{{i}}" [(ngModel)]="address.street.street2" placeholder="Street line 2 (optional)" />
+                        </div>
+                    </ng-container>
+
+                    <button class="btn btn-outline-info" type="button" (click)="addAddress()">Add Address</button>
+
+                </div><!--/.col-6-->
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
+
+                    <h5 class="mb-3">Phone</h5>
+
+                    <ng-container *ngFor="let phone of customer.phones; index as i">
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type" name="type_phone{{i}}" [(ngModel)]="phone.type" required #type="ngModel" />
+                                <div class="input-group-append" *ngIf="i > 0">
+                                    <button class="btn btn-outline-info" type="button" (click)="deletePhone(phone)">delete</button>
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" *ngIf="type.touched && type.invalid">
+                                <div *ngIf="type.errors.required">Type is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel" class="form-control" placeholder="Phone" name="value{{i}}" [(ngModel)]="phone.value" required #value="ngModel" />
+                            <div class="alert alert-danger" *ngIf="value.touched && value.invalid">
+                                <div *ngIf="value.errors.required">Phone is required.</div>
+                            </div>
+                        </div>
+
+                    </ng-container>
+
+                    <button class="btn btn-outline-info" type="button" (click)="addPhone()">Add Phone</button>
+
+                </div><!--/.col-6-->
+
+            </div><!--/.row-->
+            <button class="btn btn-outline-primary mr-2" type="submit" [disabled]="form.invalid">Save</button>
+            <button class="btn btn-outline-danger" type="button" *ngIf="customer.id && isAdmin" (click)="deleteProfile()">Delete</button>
+        </form>
+    </div>
+</ng-template>
+
+<div class="d-flex align-content-center justify-content-center" *ngIf="inProgress; else info">
+    <p>Loading...</p>
+</div>

@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Statistics</h2>
+<mat-dialog-content *ngIf="statistics">
+    <p>Total profiles: {{statistics.totalProfiles}}</p>
+    <p>Admin profiles: {{statistics.adminProfiles}}</p>
+    <p>Customer profiles: {{statistics.customerProfiles}}</p>
+    <p>Profiles added: {{statistics.profilesAdded}}</p>
+    <p>Profiles deleted: {{statistics.profilesDeleted}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button class="no-outline" mat-dialog-close>Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>History</h2>
+<mat-dialog-content *ngIf="changes">
+    <p *ngFor="let change of changes">
+        {{change.dateChanged | date:'medium'}}: {{change.userName}}
+        <span class="badge badge-info" *ngIf="change.isAdminChange">admin</span>
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button class="no-outline" mat-dialog-close>Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,48 @@
+<ng-container *ngIf="!inProgress">
+    <ng-template #noProfile>
+        <p>You haven't created profile yet.</p>
+        <a class="btn btn-outline-primary" routerLink="/customers/new">Create</a>
+    </ng-template>
+
+    <div class="container" *ngIf="user && user.customerId; else noProfile">
+        <ng-container *ngIf="customer$ | async as customer">
+            <h3 class="mb-3">Info</h3>
+            <a class="btn btn-outline-primary mb-3" routerLink="/customers/edit/{{user.customerId}}">Edit</a>
+            <p>Name: {{customer.name}}</p>
+            <p>Surname: {{customer.surname}}</p>
+            <p>MiddleName: {{customer.middleName ? customer.middleName : 'not specified'}}</p>
+            <hr />
+
+            <h4>Email</h4>
+            <ng-container *ngFor="let email of customer.emails">
+                <p>Type: {{email.type}}</p>
+                <p>Value: {{email.value}}</p>
+                <hr />
+            </ng-container>
+
+            <h4>Phone</h4>
+            <ng-container *ngFor="let phone of customer.phones">
+                <p>Type: {{phone.type}}</p>
+                <p>Value: {{phone.value}}</p>
+                <hr />
+            </ng-container>
+
+            <h4>Address</h4>
+            <ng-container *ngFor="let address of customer.addresses">
+                <p>Type: {{address.type}}</p>
+                <p>City: {{address.city}}</p>
+                <p>Street: {{address.street.street1}}</p>
+                <p *ngIf="address.street.street2">Street line 2: {{address.street.street2}}</p>
+                <p>Postal code: {{address.postalCode}}</p>
+                <hr />
+            </ng-container>
+
+            <ng-container *ngIf="customer.notes">
+                <h4>Notes</h4>
+                <p>{{customer.notes}}</p>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>
+
+
